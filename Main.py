@@ -13,10 +13,10 @@ botName = 'moshe peretz'
 
 while True:
     try:
-        with speech_recognition.Microphone() as nigg:
-            recognition_handler.adjust_for_ambient_noise(nigg, duration=0)
+        with speech_recognition.Microphone() as mic:
+            recognition_handler.adjust_for_ambient_noise(mic, duration=0)
 
-            ToBeProcessed = recognition_handler.listen(nigg)
+            ToBeProcessed = recognition_handler.listen(mic)
 
             text = str(recognition_handler.recognize_google(ToBeProcessed)).lower()
 
@@ -24,7 +24,7 @@ while True:
 
             text_processor.runAndWait()
 
-            ToBeProcessed = recognition_handler.listen(nigg)
+            ToBeProcessed = recognition_handler.listen(mic)
 
             textValidation = str(recognition_handler.recognize_google(ToBeProcessed)).lower()
 
@@ -43,7 +43,7 @@ while True:
                 elif text == "change your name":
                     text_processor.say("to what")
                     text_processor.runAndWait()
-                    recognition_handler.listen(nigg)
+                    recognition_handler.listen(mic)
                     response = str(recognition_handler.recognize_google()).lower()
                     text_processor.say(f"name has been changed to {response}")
                     botName = response
