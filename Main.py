@@ -57,6 +57,8 @@ while True:
                     text_processor.say("bye, see ya next time")
                     text_processor.runAndWait()
                     exit()
+                elif "what can you do" in text or "help" == text:
+                    text_processor.say(f"hey! im {botName}, i am artificial intelligence. my purpose is to make tasks more accessible using voice control")
             else:
                 text_processor.say("ok, so what did you mean")
                 text_processor.runAndWait()
