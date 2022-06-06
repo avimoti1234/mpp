@@ -46,6 +46,7 @@ while True:
                     recognition_handler.listen(mic)
                     response = str(recognition_handler.recognize_google()).lower()
                     text_processor.say(f"name has been changed to {response}")
+                    text_processor.runAndWait()
                     botName = response
                 elif text == "bye":
                     text_processor.say("bye, see ya next time")
