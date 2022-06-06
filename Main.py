@@ -1,4 +1,61 @@
+import speech_recognition
 import pyttsx3
-engine = pyttsx3.init()
-engine.say("I will speak this text")
-engine.runAndWait()
+from time import sleep
+from datetime import datetime
+
+text_processor = pyttsx3.init()
+
+text_processor.setProperty('rate', 150)
+
+recognition_handler = speech_recognition.Recognizer()
+
+botName = 'moshe peretz'
+
+while True:
+    try:
+        with speech_recognition.Microphone() as nigg:
+            recognition_handler.adjust_for_ambient_noise(nigg, duration=0)
+
+            ToBeProcessed = recognition_handler.listen(nigg)
+
+            text = str(recognition_handler.recognize_google(ToBeProcessed)).lower()
+
+            text_processor.say(f'did you say {text}')
+
+            text_processor.runAndWait()
+
+            ToBeProcessed = recognition_handler.listen(nigg)
+
+            textValidation = str(recognition_handler.recognize_google(ToBeProcessed)).lower()
+
+            if textValidation == "yes":
+                text_processor.say("gotcha")
+                text_processor.runAndWait()
+                sleep(0.3)
+
+                if text == "what time is it":
+                    currentime = datetime.now().strftime("%H:%M")
+                    text_processor.say(f"it's {currentime}")
+                    text_processor.runAndWait()
+                elif text == "what is your name":
+                    text_processor.say(f"my name is {botName}")
+                    text_processor.runAndWait()
+                elif text == "change your name":
+                    text_processor.say("to what")
+                    text_processor.runAndWait()
+                    recognition_handler.listen(nigg)
+                    response = str(recognition_handler.recognize_google()).lower()
+                    text_processor.say(f"name has been changed to {response}")
+                    botName = response
+                elif text == "bye":
+                    text_processor.say("bye, see ya next time")
+                    text_processor.runAndWait()
+                    exit()
+            else:
+                text_processor.say("ok, so what did you mean")
+                text_processor.runAndWait()
+
+
+
+    except Exception:
+        recognition_handler = speech_recognition.Recognizer()
