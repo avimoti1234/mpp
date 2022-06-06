@@ -33,22 +33,27 @@ while True:
                 text_processor.runAndWait()
                 sleep(0.3)
 
-                if text == "what time is it":
+                if "what time is it" in text:
                     currentime = datetime.now().strftime("%H:%M")
                     text_processor.say(f"it's {currentime}")
                     text_processor.runAndWait()
-                elif text == "what is your name":
+                elif "what is your name" in text:
                     text_processor.say(f"my name is {botName}")
                     text_processor.runAndWait()
-                elif text == "change your name":
+                elif "change your name" in text:
                     text_processor.say("to what")
                     text_processor.runAndWait()
-                    recognition_handler.listen(mic)
-                    response = str(recognition_handler.recognize_google()).lower()
+                    listener = recognition_handler.listen(mic)
+                    
+                    response = str(recognition_handler.recognize_google(listener)).lower()
+                    
                     text_processor.say(f"name has been changed to {response}")
+                    
                     text_processor.runAndWait()
+                    
                     botName = response
-                elif text == "bye":
+                    
+                elif "bye" in text:
                     text_processor.say("bye, see ya next time")
                     text_processor.runAndWait()
                     exit()
